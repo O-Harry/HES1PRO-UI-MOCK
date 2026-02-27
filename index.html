@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920">
+  <title>HES 1 PRO — パターン1：マウスだけ運用</title>
+  <meta name="description" content="HES 1 PRO Pattern 1 Mouse-Only Operation Mockup">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <div class="app-container" id="app">
+
+    <!-- Mockup Label -->
+    <div class="mockup-label">HES 1 PRO — パターン1：マウスだけ運用</div>
+
+    <!-- ====================================
+       Page 1: LIVE (通常表示)
+       ==================================== -->
+    <div class="page active" id="page-live">
+      <!-- Live View Background -->
+      <div class="live-view-area">
+        <span class="live-view-label">LIVE VIEW</span>
+      </div>
+
+      <!-- Circle Crop (always visible on Live, subtle) -->
+      <div class="circle-crop-live"></div>
+
+      <!-- Status Bar (Top Right) -->
+      <div class="status-bar">
+        <div class="status-item">
+          <span class="status-dot"></span>
+          CAM: Connected
+        </div>
+        <div class="status-item">
+          <span class="status-dot off"></span>
+          REC: Off
+        </div>
+      </div>
+
+      <!-- REC Badge near FAB (hidden on Live) -->
+      <div class="fab-rec-badge" id="live-rec-badge">REC</div>
+
+      <!-- FAB Call Button -->
+      <button class="fab-button" id="fab-live" title="Quick Controls を開く">
+        <div class="fab-icon">
+          <span class="fab-dot"></span>
+          <span class="fab-dot"></span>
+          <span class="fab-dot"></span>
+        </div>
+      </button>
+    </div>
+
+    <!-- ====================================
+       Page 2: PALETTE (操作パレット表示)
+       ==================================== -->
+    <div class="page" id="page-palette">
+      <!-- Live View Background (same as Page 1) -->
+      <div class="live-view-area">
+        <span class="live-view-label">LIVE VIEW</span>
+      </div>
+
+      <!-- Circle Mask Overlay -->
+      <div class="circle-mask-overlay visible" id="circle-mask"></div>
+
+      <!-- Status Bar (Top Right) — Recording Active -->
+      <div class="status-bar">
+        <div class="status-item">
+          <span class="status-dot"></span>
+          CAM: Connected
+        </div>
+        <div class="rec-indicator visible">
+          <span class="rec-dot"></span>
+          REC
+        </div>
+      </div>
+
+      <!-- Operation Palette -->
+      <div class="palette-overlay animate-in" id="palette">
+        <div class="palette-header">
+          <span class="palette-title">Quick Controls</span>
+        </div>
+        <div class="palette-grid">
+          <!-- 1) 録画 (Recording — Active State) -->
+          <button class="palette-btn recording" id="btn-record">
+            <span class="btn-icon">⏺</span>
+            <span class="btn-label">録画</span>
+            <span class="btn-sub">録画中</span>
+          </button>
+          <!-- 2) 静止画 (Snapshot) -->
+          <button class="palette-btn" id="btn-snapshot">
+            <span class="btn-icon">📷</span>
+            <span class="btn-label">静止画</span>
+            <span class="btn-sub">撮影</span>
+          </button>
+          <!-- 3) 円形マスク (Circle Mask — ON State) -->
+          <button class="palette-btn mask-on" id="btn-mask">
+            <span class="btn-icon">◎</span>
+            <span class="btn-label">円形マスク</span>
+            <span class="btn-sub">ON</span>
+          </button>
+          <!-- 4) 再接続 (Reconnect) -->
+          <button class="palette-btn" id="btn-reconnect">
+            <span class="btn-icon">↻</span>
+            <span class="btn-label">再接続</span>
+            <span class="btn-sub">カメラ</span>
+          </button>
+        </div>
+        <div class="palette-footer">
+          操作後は自動で閉じます（約2秒） ・ ワンクリックで操作
+        </div>
+      </div>
+
+      <!-- REC Badge near FAB (active) -->
+      <div class="fab-rec-badge active">● REC</div>
+
+      <!-- FAB Call Button -->
+      <button class="fab-button" id="fab-palette" title="パレットを閉じる">
+        <div class="fab-icon">
+          <span class="fab-dot"></span>
+          <span class="fab-dot"></span>
+          <span class="fab-dot"></span>
+        </div>
+      </button>
+    </div>
+
+    <!-- ====================================
+       Page 3: SETTINGS (設定)
+       ==================================== -->
+    <div class="page" id="page-settings">
+      <div class="settings-layout">
+        <!-- Settings Panel (Left) -->
+        <div class="settings-panel">
+          <div class="settings-header">
+            <h1 class="settings-page-title">Settings</h1>
+            <div class="settings-warning">
+              <p>※ 施術中は触らない設定（誤操作防止）</p>
+              <p>※ 普段は Quick Controls（操作パレット）で操作</p>
+            </div>
+          </div>
+
+          <!-- Setting 1: Crop Size (Slider) -->
+          <div class="setting-section">
+            <div class="setting-label">クロップサイズ</div>
+            <div class="slider-container" id="crop-slider">
+              <div class="slider-track" id="crop-track">
+                <div class="slider-fill" id="crop-fill" style="width: 75%"></div>
+                <div class="slider-thumb" id="crop-thumb" style="left: 75%"></div>
+              </div>
+              <div class="slider-value" id="crop-value">75%</div>
+            </div>
+            <div class="slider-helper">スライダーに連動して、円形クロップサイズが変わります</div>
+          </div>
+
+          <!-- Setting 2: Saturation -->
+          <div class="setting-section">
+            <div class="setting-label">彩度</div>
+            <div class="slider-container" id="saturation-slider">
+              <div class="slider-track" id="sat-track">
+                <div class="slider-fill" id="sat-fill" style="width: 60%"></div>
+                <div class="slider-thumb" id="sat-thumb" style="left: 60%"></div>
+              </div>
+              <div class="slider-value" id="sat-value">60</div>
+            </div>
+          </div>
+
+          <!-- Setting 3: Aspect Ratio -->
+          <div class="setting-section">
+            <div class="setting-label">アスペクト比</div>
+            <div class="segment-control" id="aspect-control">
+              <button class="segment-btn active" data-value="16:9">16:9</button>
+              <button class="segment-btn" data-value="4:3">4:3</button>
+              <button class="segment-btn" data-value="1:1">1:1</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Preview Area (Right) -->
+        <div class="settings-preview">
+          <div class="live-view-area">
+            <span class="live-view-label">PREVIEW</span>
+          </div>
+
+          <!-- Crop Preview with Ghost Circles -->
+          <div class="settings-crop-preview">
+            <div class="crop-ghost-small"></div>
+            <div class="crop-circle-current" id="crop-circle"></div>
+            <div class="crop-ghost-large"></div>
+          </div>
+
+          <!-- Status Bar -->
+          <div class="status-bar">
+            <div class="status-item">
+              <span class="status-dot"></span>
+              CAM: Connected
+            </div>
+            <div class="status-item">
+              <span class="status-dot off"></span>
+              REC: Off
+            </div>
+          </div>
+
+          <!-- FAB Call Button (Settings page) -->
+          <button class="fab-button" id="fab-settings" title="Quick Controls に戻る">
+            <div class="fab-icon">
+              <span class="fab-dot"></span>
+              <span class="fab-dot"></span>
+              <span class="fab-dot"></span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================
+       Navigation Tabs (Mockup page switcher)
+       ==================================== -->
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-page="live">Live</button>
+      <button class="nav-tab" data-page="palette">Palette</button>
+      <button class="nav-tab" data-page="settings">Settings</button>
+    </nav>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
